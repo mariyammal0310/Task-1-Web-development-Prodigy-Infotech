@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Navigation Menu</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden; /* Prevent horizontal scrollbar */
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(to right, #3498db, #2c3e50);
+      padding: 15px 0;
+      text-align: center;
+      transition: background 0.5s, box-shadow 0.5s;
+      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 5px;
+      transition: background 0.3s, color 0.3s, transform 0.3s;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, #3498db, #2c3e50);
+      border-radius: 5px;
+      z-index: -1;
+      transition: opacity 0.5s, transform 0.5s;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    nav a:hover::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    section {
+      height: 100vh;
+      padding: 20px;
+    }
+
+    /* Styles on scroll */
+    nav.scrolled {
+      background: linear-gradient(to right, #2c3e50, #3498db);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Styles on hover */
+    nav a:hover {
+      background: #34495e;
+      color: #ecf0f1;
+      transform: translateY(-3px);
+    }
+
+    /* Highlight current page */
+    nav a.active {
+      background: #34495e;
+      color: #ecf0f1;
+    }
+
+    /* Smooth scroll animation */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Responsive navigation menu */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 10px 0;
+      }
+    }
+
+    /* Advanced Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, #3498db, #2c3e50);
+      mix-blend-mode: overlay;
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://source.unsplash.com/1920x1080/?nature') center/cover fixed;
+      mix-blend-mode: multiply;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#services" class="zoom">Services</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="home">
+    <h1>Home</h1>
+    <!-- Add your content for the Home section -->
+  </section>
+
+  <section id="about">
+    <h1>About</h1>
+    <!-- Add your content for the About section -->
+  </section>
+
+  <section id="services">
+    <h1>Services</h1>
+    <!-- Add your content for the Services section -->
+  </section>
+
+  <section id="contact">
+    <h1>Contact</h1>
+    <!-- Add your content for the Contact section -->
+  </section>
+
+  <script>
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+
+      // Highlight the current section in the navigation menu
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const link = document.querySelector(`nav a[href="#${section.id}"]`);
+        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
